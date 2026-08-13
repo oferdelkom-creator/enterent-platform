@@ -1,6 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import AddListingForm from "./add-listing-form";
 import DeleteListingButton from "./delete-listing-button";
+import SyncButton from "./sync-button";
+
+const syncStatusStyles: Record<string, string> = {
+  not_connected: "bg-slate-100 text-slate-500",
+  ok: "bg-emerald-100 text-emerald-800",
+  error: "bg-red-100 text-red-800",
+};
 
 export default async function DashboardListingsPage() {
   const supabase = await createClient();
@@ -17,7 +24,9 @@ export default async function DashboardListingsPage() {
   const { data: listings } = host
     ? await supabase
         .from("listings")
-        .select("id, title, city, country, bedrooms, max_guests, airbnb_listing_url, ical_sync_status, created_at")
+        .select(
+          "id, title, city, country, bedrooms, max_guests, airbnb_listing_url, ical_url, ical_sync_status, ical_last_synced_at, created_at"
+        )
         .eq("host_id", host.id)
         .order("created_at", { ascending: false })
     : { data: [] };
@@ -54,8 +63,25 @@ export default async function DashboardListingsPage() {
                       View on Airbnb
                     </a>
                   )}
+                  {listing.ical_url && (
+                    <div className="mt-1 flex items-center gap-2">
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${syncStatusStyles[listing.ical_sync_status]}`}
+                      >
+                        calendar: {listing.ical_sync_status}
+                      </span>
+                      {listing.ical_last_synced_at && (
+                        <span className="text-[10px] text-slate-400">
+                          synced {new Date(listing.ical_last_synced_at).toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <DeleteListingButton listingId={listing.id} />
+                <div className="flex flex-col items-end gap-2">
+                  {listing.ical_url && <SyncButton listingId={listing.id} />}
+                  <DeleteListingButton listingId={listing.id} />
+                </div>
               </div>
             ))
           ) : (

@@ -1,0 +1,89 @@
+import { createClient } from "@/lib/supabase/server";
+import RequestPanel from "./request-panel";
+
+export default async function FindHostsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ city?: string; country?: string }>;
+}) {
+  const { city, country } = await searchParams;
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: host } = await supabase
+    .from("hosts")
+    .select("id")
+    .eq("user_id", user!.id)
+    .maybeSingle();
+
+  const { data: ownListings } = host
+    ? await supabase.from("listings").select("id, title").eq("host_id", host.id)
+    : { data: [] };
+
+  let query = supabase.from("discoverable_listings").select("*").order("created_at", { ascending: false });
+
+  if (city) query = query.ilike("city", `%${city}%`);
+  if (country) query = query.ilike("country", `%${country}%`);
+
+  const { data: listings } = await query;
+
+  const otherListings = (listings ?? []).filter((l) => l.host_id !== host?.id);
+
+  return (
+    <div>
+      <h1 className="text-xl font-semibold text-slate-900">Find hosts</h1>
+      <p className="mt-1 text-sm text-slate-500">
+        Browse verified hosts to propose a stay swap or request emergency backup.
+      </p>
+
+      <form className="mt-4 flex gap-2">
+        <input
+          name="city"
+          defaultValue={city}
+          placeholder="City"
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
+        />
+        <input
+          name="country"
+          defaultValue={country}
+          placeholder="Country"
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
+        />
+        <button type="submit" className="rounded-md bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+          Filter
+        </button>
+      </form>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        {otherListings.length ? (
+          otherListings.map((listing) => (
+            <div key={listing.id} className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div>
+                <p className="font-medium text-slate-900">{listing.title}</p>
+                <p className="text-xs text-slate-500">
+                  {[listing.city, listing.country].filter(Boolean).join(", ") || "No location set"}
+                  {listing.bedrooms ? ` · ${listing.bedrooms} bd` : ""}
+                  {listing.max_guests ? ` · up to ${listing.max_guests} guests` : ""}
+                </p>
+                <p className="text-xs text-slate-400">Hosted by {listing.host_name}</p>
+              </div>
+              {host && (
+                <RequestPanel
+                  targetHostId={listing.host_id}
+                  targetListingId={listing.id}
+                  ownListings={ownListings ?? []}
+                />
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-400 sm:col-span-2">
+            No verified hosts to show yet.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

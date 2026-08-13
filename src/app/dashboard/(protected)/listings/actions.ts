@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { fetchIcalBookings } from "@/lib/ical";
 
 async function getOwnHostId(supabase: Awaited<ReturnType<typeof createClient>>) {
   const {
@@ -54,6 +55,51 @@ export async function deleteListing(listingId: string) {
   await getOwnHostId(supabase);
 
   await supabase.from("listings").delete().eq("id", listingId);
+
+  revalidatePath("/dashboard/listings");
+}
+
+export async function syncListingCalendar(listingId: string) {
+  const supabase = await createClient();
+  const hostId = await getOwnHostId(supabase);
+
+  const { data: listing } = await supabase
+    .from("listings")
+    .select("id, ical_url")
+    .eq("id", listingId)
+    .eq("host_id", hostId)
+    .maybeSingle();
+
+  if (!listing) throw new Error("Listing not found");
+  if (!listing.ical_url) throw new Error("No iCal URL set for this listing");
+
+  try {
+    const bookings = await fetchIcalBookings(listing.ical_url);
+
+    await supabase.from("listing_bookings").delete().eq("listing_id", listingId);
+
+    if (bookings.length) {
+      await supabase.from("listing_bookings").insert(
+        bookings.map((b) => ({
+          listing_id: listingId,
+          start_date: b.start,
+          end_date: b.end,
+          source: "ical",
+        }))
+      );
+    }
+
+    await supabase
+      .from("listings")
+      .update({ ical_last_synced_at: new Date().toISOString(), ical_sync_status: "ok" })
+      .eq("id", listingId);
+  } catch {
+    await supabase
+      .from("listings")
+      .update({ ical_last_synced_at: new Date().toISOString(), ical_sync_status: "error" })
+      .eq("id", listingId);
+    throw new Error("Failed to sync calendar — check the iCal URL");
+  }
 
   revalidatePath("/dashboard/listings");
 }
