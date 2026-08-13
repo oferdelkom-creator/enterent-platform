@@ -37,5 +37,13 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  const isDashboardRoute = request.nextUrl.pathname.startsWith("/dashboard");
+
+  if (isDashboardRoute && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
   return supabaseResponse;
 }
