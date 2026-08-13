@@ -10,7 +10,13 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (!error && data.user) {
+    if (error) {
+      return NextResponse.redirect(
+        `${origin}/login?error=${encodeURIComponent(error.message)}`
+      );
+    }
+
+    if (data.user) {
       const { data: existingHost } = await supabase
         .from("hosts")
         .select("id")
