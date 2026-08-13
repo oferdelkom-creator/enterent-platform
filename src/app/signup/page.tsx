@@ -100,6 +100,14 @@ export default function SignupPage() {
           </p>
         </div>
 
+        <div className="rounded-md bg-slate-100 p-2 font-mono text-[10px] text-slate-500">
+          url: {process.env.NEXT_PUBLIC_SUPABASE_URL || "MISSING"}
+          <br />
+          key: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+            ? `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.slice(0, 12)}... (${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.length} chars)`
+            : "MISSING"}
+        </div>
+
         <OAuthButtons
           redirectPath="/dashboard"
           disabled={!agreedToTerms}
