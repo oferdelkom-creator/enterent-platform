@@ -66,10 +66,9 @@ export default function SignupPage() {
         setCheckEmail(true);
       }
     } catch (e) {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "(not set)";
       setError(
         e instanceof Error
-          ? `${e.message} — Supabase URL configured as: ${supabaseUrl}`
+          ? e.message
           : "Unexpected error contacting the server. Please try again."
       );
     } finally {
@@ -98,14 +97,6 @@ export default function SignupPage() {
           <p className="mt-1 text-sm text-slate-500">
             Create your host account to swap stays or find emergency backup hosting.
           </p>
-        </div>
-
-        <div className="rounded-md bg-slate-100 p-2 font-mono text-[10px] text-slate-500">
-          url: {process.env.NEXT_PUBLIC_SUPABASE_URL || "MISSING"}
-          <br />
-          key: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-            ? `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.slice(0, 12)}... (${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.length} chars)`
-            : "MISSING"}
         </div>
 
         <OAuthButtons
