@@ -27,35 +27,42 @@ export default function SignupPage() {
     setLoading(true);
     setError(null);
 
-    const supabase = createClient();
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName } },
-    });
+    try {
+      const supabase = createClient();
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: fullName } },
+      });
 
-    if (signUpError || !data.user) {
-      setError(signUpError?.message ?? "Failed to create account");
-      setLoading(false);
-      return;
-    }
+      if (signUpError || !data.user) {
+        setError(signUpError?.message ?? "Failed to create account");
+        return;
+      }
 
-    const { error: profileError } = await supabase.rpc("create_host_profile", {
-      p_user_id: data.user.id,
-      p_full_name: fullName,
-    });
+      const { error: profileError } = await supabase.rpc("create_host_profile", {
+        p_user_id: data.user.id,
+        p_full_name: fullName,
+      });
 
-    if (profileError) {
-      setError(profileError.message);
-      setLoading(false);
-      return;
-    }
+      if (profileError) {
+        setError(profileError.message);
+        return;
+      }
 
-    if (data.session) {
-      router.push("/dashboard");
-      router.refresh();
-    } else {
-      setCheckEmail(true);
+      if (data.session) {
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setCheckEmail(true);
+      }
+    } catch (e) {
+      setError(
+        e instanceof Error
+          ? `Unexpected error: ${e.message}`
+          : "Unexpected error contacting the server. Please try again."
+      );
+    } finally {
       setLoading(false);
     }
   }
