@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { withTimeout } from "@/lib/with-timeout";
 import OAuthButtons from "@/components/oauth-buttons";
 
 export default function SignupPage() {
@@ -29,21 +30,29 @@ export default function SignupPage() {
 
     try {
       const supabase = createClient();
-      const { data, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: fullName } },
-      });
+      const { data, error: signUpError } = await withTimeout(
+        supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { full_name: fullName } },
+        }),
+        15000,
+        "sign up"
+      );
 
       if (signUpError || !data.user) {
         setError(signUpError?.message ?? "Failed to create account");
         return;
       }
 
-      const { error: profileError } = await supabase.rpc("create_host_profile", {
-        p_user_id: data.user.id,
-        p_full_name: fullName,
-      });
+      const { error: profileError } = await withTimeout(
+        supabase.rpc("create_host_profile", {
+          p_user_id: data.user.id,
+          p_full_name: fullName,
+        }),
+        15000,
+        "profile creation"
+      );
 
       if (profileError) {
         setError(profileError.message);
@@ -57,9 +66,10 @@ export default function SignupPage() {
         setCheckEmail(true);
       }
     } catch (e) {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "(not set)";
       setError(
         e instanceof Error
-          ? `Unexpected error: ${e.message}`
+          ? `${e.message} — Supabase URL configured as: ${supabaseUrl}`
           : "Unexpected error contacting the server. Please try again."
       );
     } finally {
