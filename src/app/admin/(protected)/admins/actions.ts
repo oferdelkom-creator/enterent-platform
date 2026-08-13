@@ -80,3 +80,19 @@ export async function revokeAdmin(adminUserId: string) {
 
   revalidatePath("/admin/admins");
 }
+
+export async function cancelInvite(inviteId: string) {
+  const { supabase, user } = await requireCanManageAdmins();
+
+  await supabase.from("admin_invites").delete().eq("id", inviteId).is("accepted_at", null);
+
+  await logAdminAction(supabase, {
+    adminId: user.id,
+    adminEmail: user.email ?? null,
+    action: "admin.cancel_invite",
+    targetTable: "admin_invites",
+    targetId: inviteId,
+  });
+
+  revalidatePath("/admin/admins");
+}

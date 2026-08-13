@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import InviteForm from "./invite-form";
 import RevokeButton from "./revoke-button";
+import CancelInviteButton from "./cancel-invite-button";
 
 export default async function AdminAdminsPage() {
   const supabase = await createClient();
@@ -84,6 +85,9 @@ export default async function AdminAdminsPage() {
                       <td className="px-4 py-3 text-slate-600 capitalize">{inv.role}</td>
                       <td className="px-4 py-3 text-xs text-slate-400">
                         expires {new Date(inv.expires_at).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-3">
+                        <CancelInviteButton inviteId={inv.id} />
                       </td>
                     </tr>
                   ))}
