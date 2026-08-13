@@ -14,9 +14,16 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (!agreedToTerms) {
+      setError("You must agree to the Terms of Service and Privacy Policy to continue.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -76,7 +83,13 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <OAuthButtons redirectPath="/dashboard" />
+        <OAuthButtons
+          redirectPath="/dashboard"
+          disabled={!agreedToTerms}
+          onDisabledClick={() =>
+            setError("You must agree to the Terms of Service and Privacy Policy to continue.")
+          }
+        />
 
         <div className="flex items-center gap-3 text-xs text-slate-400">
           <div className="h-px flex-1 bg-slate-200" />
@@ -118,6 +131,26 @@ export default function SignupPage() {
               className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
             />
           </div>
+
+          <label className="flex items-start gap-2 text-xs text-slate-600">
+            <input
+              type="checkbox"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              I agree to the{" "}
+              <Link href="/terms" target="_blank" className="font-medium text-slate-900 hover:underline">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" target="_blank" className="font-medium text-slate-900 hover:underline">
+                Privacy Policy
+              </Link>
+              .
+            </span>
+          </label>
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 

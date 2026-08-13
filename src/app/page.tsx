@@ -25,6 +25,16 @@ export default function Home() {
           Log in
         </Link>
       </div>
+
+      <div className="mt-16 flex gap-4 text-xs text-slate-400">
+        <Link href="/terms" className="hover:underline">
+          Terms of Service
+        </Link>
+        <span>·</span>
+        <Link href="/privacy" className="hover:underline">
+          Privacy Policy
+        </Link>
+      </div>
     </main>
   );
 }
