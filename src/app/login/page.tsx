@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Logo } from "@/components/logo";
 import OAuthButtons from "@/components/oauth-buttons";
 
 function LoginForm() {
@@ -43,6 +44,7 @@ function LoginForm() {
 
   return (
     <div className="w-full max-w-sm space-y-5 rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+      <Logo />
       <div>
         <h1 className="text-xl font-semibold text-slate-900">Log in to EnterRent</h1>
         <p className="mt-1 text-sm text-slate-500">Welcome back.</p>

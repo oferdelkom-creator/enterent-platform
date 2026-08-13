@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { withTimeout } from "@/lib/with-timeout";
+import { Logo } from "@/components/logo";
 import OAuthButtons from "@/components/oauth-buttons";
 
 export default function SignupPage() {
@@ -92,6 +93,7 @@ export default function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-sm space-y-5 rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+        <Logo />
         <div>
           <h1 className="text-xl font-semibold text-slate-900">Join EnterRent</h1>
           <p className="mt-1 text-sm text-slate-500">

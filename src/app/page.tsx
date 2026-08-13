@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 const steps = [
   {
@@ -34,10 +35,19 @@ const useCases = [
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center bg-slate-50">
-      <section className="flex w-full flex-col items-center bg-brand-navy px-6 py-24 text-center text-white">
-        <p className="text-sm font-medium uppercase tracking-wide text-brand-teal-light">
-          EnterRent
-        </p>
+      <header className="flex w-full items-center justify-between px-6 py-4">
+        <Logo />
+        <nav className="flex items-center gap-4 text-sm">
+          <Link href="/blog" className="text-slate-600 hover:text-slate-900">
+            Blog
+          </Link>
+          <Link href="/login" className="text-slate-600 hover:text-slate-900">
+            Log in
+          </Link>
+        </nav>
+      </header>
+
+      <section className="flex w-full flex-col items-center bg-brand-navy px-6 py-20 text-center text-white">
         <h1 className="mt-3 max-w-2xl text-3xl font-semibold sm:text-4xl">
           A trusted network for verified Airbnb hosts to swap stays and cover each other in an
           emergency

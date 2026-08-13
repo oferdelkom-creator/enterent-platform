@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { Logo } from "@/components/logo";
 import SignOutButton from "./sign-out-button";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -44,8 +45,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div className="flex min-h-screen bg-slate-50">
       <aside className="w-56 shrink-0 border-r border-slate-200 bg-white px-4 py-6">
         <div className="mb-8 px-2">
-          <p className="text-sm font-semibold text-slate-900">EnterRent</p>
-          <p className="text-xs text-slate-500">Admin</p>
+          <Logo iconClassName="h-6 w-6" tagline="Admin" />
         </div>
         <nav className="space-y-1">
           {navItems.map((item) => (
