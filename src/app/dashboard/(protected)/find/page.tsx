@@ -59,23 +59,40 @@ export default async function FindHostsPage({
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {otherListings.length ? (
           otherListings.map((listing) => (
-            <div key={listing.id} className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div>
-                <p className="font-medium text-slate-900">{listing.title}</p>
-                <p className="text-xs text-slate-500">
-                  {[listing.city, listing.country].filter(Boolean).join(", ") || "No location set"}
-                  {listing.bedrooms ? ` · ${listing.bedrooms} bd` : ""}
-                  {listing.max_guests ? ` · up to ${listing.max_guests} guests` : ""}
-                </p>
-                <p className="text-xs text-slate-400">Hosted by {listing.host_name}</p>
-              </div>
-              {host && (
-                <RequestPanel
-                  targetHostId={listing.host_id}
-                  targetListingId={listing.id}
-                  ownListings={ownListings ?? []}
-                />
+            <div
+              key={listing.id}
+              className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+            >
+              {listing.photo_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={listing.photo_url} alt={listing.title} className="h-40 w-full object-cover" />
+              ) : (
+                <div className="flex h-40 w-full items-center justify-center bg-slate-100 text-xs text-slate-400">
+                  No photo yet
+                </div>
               )}
+              <div className="space-y-2 p-4">
+                <div>
+                  <p className="font-medium text-slate-900">{listing.title}</p>
+                  <p className="text-xs text-slate-500">
+                    {[listing.neighborhood, listing.city, listing.country].filter(Boolean).join(", ") ||
+                      "No location set"}
+                    {listing.bedrooms ? ` · ${listing.bedrooms} bd` : ""}
+                    {listing.max_guests ? ` · up to ${listing.max_guests} guests` : ""}
+                  </p>
+                  {listing.description && (
+                    <p className="mt-1 line-clamp-2 text-xs text-slate-500">{listing.description}</p>
+                  )}
+                  <p className="mt-1 text-xs text-slate-400">Hosted by {listing.host_name}</p>
+                </div>
+                {host && (
+                  <RequestPanel
+                    targetHostId={listing.host_id}
+                    targetListingId={listing.id}
+                    ownListings={ownListings ?? []}
+                  />
+                )}
+              </div>
             </div>
           ))
         ) : (

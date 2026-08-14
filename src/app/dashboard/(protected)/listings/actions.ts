@@ -22,6 +22,29 @@ async function getOwnHostId(supabase: Awaited<ReturnType<typeof createClient>>) 
   return host.id as string;
 }
 
+async function uploadListingPhoto(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  hostId: string,
+  photo: File
+): Promise<string | null> {
+  if (!photo || photo.size === 0) return null;
+
+  const ext = photo.name.includes(".") ? photo.name.split(".").pop() : "jpg";
+  const path = `${hostId}/${crypto.randomUUID()}.${ext}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("listing-photos")
+    .upload(path, photo, { contentType: photo.type || undefined });
+
+  if (uploadError) {
+    console.error("Failed to upload listing photo:", uploadError.message);
+    return null;
+  }
+
+  const { data } = supabase.storage.from("listing-photos").getPublicUrl(path);
+  return data.publicUrl;
+}
+
 export async function addListing(formData: FormData) {
   const supabase = await createClient();
   const hostId = await getOwnHostId(supabase);
@@ -29,18 +52,26 @@ export async function addListing(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
   const city = String(formData.get("city") ?? "").trim() || null;
   const country = String(formData.get("country") ?? "").trim() || null;
+  const neighborhood = String(formData.get("neighborhood") ?? "").trim() || null;
+  const description = String(formData.get("description") ?? "").trim() || null;
   const airbnbListingUrl = String(formData.get("airbnb_listing_url") ?? "").trim() || null;
   const icalUrl = String(formData.get("ical_url") ?? "").trim() || null;
   const maxGuests = formData.get("max_guests") ? Number(formData.get("max_guests")) : null;
   const bedrooms = formData.get("bedrooms") ? Number(formData.get("bedrooms")) : null;
+  const photo = formData.get("photo") as File | null;
 
   if (!title) throw new Error("Title is required");
+
+  const photoUrl = photo ? await uploadListingPhoto(supabase, hostId, photo) : null;
 
   await supabase.from("listings").insert({
     host_id: hostId,
     title,
     city,
     country,
+    neighborhood,
+    description,
+    photo_url: photoUrl,
     airbnb_listing_url: airbnbListingUrl,
     ical_url: icalUrl,
     max_guests: maxGuests,
@@ -48,6 +79,7 @@ export async function addListing(formData: FormData) {
   });
 
   revalidatePath("/dashboard/listings");
+  revalidatePath("/dashboard/find");
 }
 
 export async function deleteListing(listingId: string) {
@@ -57,6 +89,7 @@ export async function deleteListing(listingId: string) {
   await supabase.from("listings").delete().eq("id", listingId);
 
   revalidatePath("/dashboard/listings");
+  revalidatePath("/dashboard/find");
 }
 
 export async function syncListingCalendar(listingId: string) {

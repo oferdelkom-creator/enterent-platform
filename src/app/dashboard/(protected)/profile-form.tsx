@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { updateHostProfile } from "./actions";
 import PhoneInput from "@/components/phone-input";
 import { COUNTRIES } from "@/lib/countries";
@@ -26,8 +25,70 @@ const statusStyles: Record<string, string> = {
 const inputClasses =
   "w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm focus:border-brand-teal focus:outline-none focus:ring-1 focus:ring-brand-teal";
 
+function StatusBadge({ status }: { status: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3">
+      <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+        Verification status
+      </span>
+      <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[status]}`}>{status}</span>
+    </div>
+  );
+}
+
+function ProfileView({ host, onEdit }: { host: Host; onEdit: () => void }) {
+  const location = [host.city, host.country].filter(Boolean).join(", ");
+
+  return (
+    <div className="max-w-xl space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <StatusBadge status={host.verification_status} />
+
+      <dl className="space-y-4">
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-400">Full name</dt>
+          <dd className="mt-0.5 text-sm text-slate-900">{host.full_name || "—"}</dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-400">Phone</dt>
+          <dd className="mt-0.5 text-sm text-slate-900">{host.phone || "—"}</dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-400">Location</dt>
+          <dd className="mt-0.5 text-sm text-slate-900">{location || "—"}</dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-400">Airbnb profile</dt>
+          <dd className="mt-0.5 text-sm">
+            {host.airbnb_profile_url ? (
+              <a
+                href={host.airbnb_profile_url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand-teal-dark hover:underline"
+              >
+                {host.airbnb_profile_url}
+              </a>
+            ) : (
+              <span className="text-slate-900">—</span>
+            )}
+          </dd>
+        </div>
+      </dl>
+
+      <button
+        type="button"
+        onClick={onEdit}
+        className="w-full rounded-md border border-brand-navy py-2.5 text-sm font-medium text-brand-navy transition-colors hover:bg-slate-50"
+      >
+        Edit profile
+      </button>
+    </div>
+  );
+}
+
 export default function ProfileForm({ host }: { host: Host | null }) {
   const [isPending, startTransition] = useTransition();
+  const [editing, setEditing] = useState(!host?.full_name);
   const [country, setCountry] = useState(host?.country ?? "");
 
   useEffect(() => {
@@ -42,7 +103,14 @@ export default function ProfileForm({ host }: { host: Host | null }) {
   const citySuggestions = CITIES_BY_COUNTRY[country] ?? [];
 
   function handleSubmit(formData: FormData) {
-    startTransition(() => updateHostProfile(formData));
+    startTransition(async () => {
+      await updateHostProfile(formData);
+      setEditing(false);
+    });
+  }
+
+  if (!editing && host) {
+    return <ProfileView host={host} onEdit={() => setEditing(true)} />;
   }
 
   return (
@@ -50,18 +118,7 @@ export default function ProfileForm({ host }: { host: Host | null }) {
       action={handleSubmit}
       className="max-w-xl space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
     >
-      {host && (
-        <div className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3">
-          <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Verification status
-          </span>
-          <span
-            className={`rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[host.verification_status]}`}
-          >
-            {host.verification_status}
-          </span>
-        </div>
-      )}
+      {host && <StatusBadge status={host.verification_status} />}
 
       <div className="space-y-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
@@ -142,13 +199,24 @@ export default function ProfileForm({ host }: { host: Host | null }) {
         </div>
       </div>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="w-full rounded-md bg-brand-navy py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-navy-light disabled:opacity-50"
-      >
-        {isPending ? "Saving..." : "Save profile"}
-      </button>
+      <div className="flex gap-3">
+        {host?.full_name && (
+          <button
+            type="button"
+            onClick={() => setEditing(false)}
+            className="flex-1 rounded-md border border-slate-300 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+          >
+            Cancel
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={isPending}
+          className="flex-1 rounded-md bg-brand-navy py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-navy-light disabled:opacity-50"
+        >
+          {isPending ? "Saving..." : "Save profile"}
+        </button>
+      </div>
     </form>
   );
 }

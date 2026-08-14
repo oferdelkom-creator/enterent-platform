@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { addListing } from "./actions";
 import { COUNTRIES } from "@/lib/countries";
 import { CITIES_BY_COUNTRY } from "@/lib/cities-by-country";
@@ -10,13 +10,28 @@ const inputClasses = "w-full rounded-md border border-slate-300 px-3 py-1.5 text
 export default function AddListingForm() {
   const [isPending, startTransition] = useTransition();
   const [country, setCountry] = useState("");
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    return () => {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+    };
+  }, [photoPreview]);
+
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoPreview(file ? URL.createObjectURL(file) : null);
+  }
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       await addListing(formData);
       formRef.current?.reset();
       setCountry("");
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(null);
     });
   }
 
@@ -33,6 +48,25 @@ export default function AddListingForm() {
       <div className="space-y-1">
         <label className="text-xs font-medium text-slate-700">Title</label>
         <input name="title" required className={inputClasses} />
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-slate-700">Photo</label>
+        {photoPreview && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoPreview}
+            alt="Listing preview"
+            className="mb-1 h-32 w-full rounded-md object-cover"
+          />
+        )}
+        <input
+          name="photo"
+          type="file"
+          accept="image/*"
+          onChange={handlePhotoChange}
+          className="w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-slate-700 hover:file:bg-slate-200"
+        />
       </div>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -63,6 +97,11 @@ export default function AddListingForm() {
         </div>
       </div>
 
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-slate-700">Neighborhood / area</label>
+        <input name="neighborhood" placeholder="e.g. Florentin, Downtown" className={inputClasses} />
+      </div>
+
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <div className="space-y-1">
           <label className="text-xs font-medium text-slate-700">Bedrooms</label>
@@ -72,6 +111,16 @@ export default function AddListingForm() {
           <label className="text-xs font-medium text-slate-700">Max guests</label>
           <input name="max_guests" type="number" min={0} className={inputClasses} />
         </div>
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-slate-700">Description</label>
+        <textarea
+          name="description"
+          rows={3}
+          placeholder="A short description other hosts will see..."
+          className={inputClasses}
+        />
       </div>
 
       <div className="space-y-1">
