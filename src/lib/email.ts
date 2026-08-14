@@ -21,7 +21,25 @@ export async function sendHostVerifiedEmail(host: { email: string; full_name: st
 
 Great news — your host profile is now verified on EnterRent.
 
-You can now browse other verified hosts, propose stay swaps, and request emergency backup hosting.
+Here's how to get the most out of it:
+
+1. Add your listings — go to "My listings" and add every property you host, with your
+   Airbnb listing link and iCal URL so we can show real availability.
+   https://enterent.org/dashboard/listings
+
+2. Sync your calendar — after adding a listing, click "Sync calendar" so other hosts
+   can see when you're actually free.
+
+3. Browse verified hosts — go to "Find hosts" to look for a stay swap for your own
+   vacation, or a backup host near a property you're worried about.
+   https://enterent.org/dashboard/find
+
+4. Send a request — found a good match? Propose a swap (offering one of your own
+   listings) or ask for emergency backup, with your dates and a short message.
+
+5. Track it — "Requests" shows everything you've sent and received, so you can
+   accept, decline, or cancel as things move.
+   https://enterent.org/dashboard/requests
 
 Log in to get started: https://enterent.org/login
 
