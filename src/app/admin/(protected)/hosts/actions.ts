@@ -34,7 +34,11 @@ export async function setHostVerificationStatus(
   });
 
   if (status === "verified" && host) {
-    await sendHostVerifiedEmail(host);
+    try {
+      await sendHostVerifiedEmail(host);
+    } catch (e) {
+      console.error("Failed to send host verified email:", e);
+    }
   }
 
   revalidatePath("/admin/hosts");
