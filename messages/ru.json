@@ -235,6 +235,7 @@
     "bedroomsAbbrev": "{count, plural, one {# спальня} few {# спальни} many {# спален} other {# спален}}",
     "upToGuests": "до {count, plural, one {# гостя} few {# гостей} many {# гостей} other {# гостей}}",
     "viewOnAirbnb": "Смотреть на Airbnb",
+    "viewOnMap": "Смотреть на карте",
     "calendarPrefix": "календарь:",
     "syncStatus": {
       "not_connected": "не подключён",
@@ -255,6 +256,7 @@
     "startTyping": "Начните вводить...",
     "neighborhood": "Район",
     "neighborhoodPlaceholder": "например, Флорентин, центр",
+    "mapLocation": "Местоположение на карте",
     "bedrooms": "Спальни",
     "maxGuests": "Макс. гостей",
     "description": "Описание",
@@ -280,6 +282,7 @@
     "bedroomsAbbrev": "{count, plural, one {# спальня} few {# спальни} many {# спален} other {# спален}}",
     "upToGuests": "до {count, plural, one {# гостя} few {# гостей} many {# гостей} other {# гостей}}",
     "hostedBy": "Хозяин: {name}",
+    "viewOnMap": "Смотреть на карте",
     "noHostsYet": "Пока нет проверенных хозяев для показа.",
     "requestSent": "Запрос отправлен",
     "requestSwap": "Запросить обмен",
@@ -336,5 +339,11 @@
     "aHost": "Хозяин",
     "noPostsYet": "Пока нет записей — станьте первым, кто поделится историей хостинга.",
     "backToBlog": "← Назад в блог"
+  },
+  "LocationPicker": {
+    "searchPlaceholder": "Поиск адреса...",
+    "search": "Найти",
+    "searching": "Поиск...",
+    "hint": "Нажмите на карту или найдите адрес, чтобы отметить местоположение объекта."
   }
 }

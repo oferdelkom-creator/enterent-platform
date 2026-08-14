@@ -59,6 +59,8 @@ export async function addListing(formData: FormData) {
   const maxGuests = formData.get("max_guests") ? Number(formData.get("max_guests")) : null;
   const bedrooms = formData.get("bedrooms") ? Number(formData.get("bedrooms")) : null;
   const photo = formData.get("photo") as File | null;
+  const latitude = formData.get("latitude") ? Number(formData.get("latitude")) : null;
+  const longitude = formData.get("longitude") ? Number(formData.get("longitude")) : null;
 
   if (!title) throw new Error("Title is required");
 
@@ -76,6 +78,8 @@ export async function addListing(formData: FormData) {
     ical_url: icalUrl,
     max_guests: maxGuests,
     bedrooms,
+    latitude,
+    longitude,
   });
 
   revalidatePath("/dashboard/listings");

@@ -235,6 +235,7 @@
     "bedroomsAbbrev": "{count} bd",
     "upToGuests": "up to {count} guests",
     "viewOnAirbnb": "View on Airbnb",
+    "viewOnMap": "View on map",
     "calendarPrefix": "calendar:",
     "syncStatus": {
       "not_connected": "not connected",
@@ -255,6 +256,7 @@
     "startTyping": "Start typing...",
     "neighborhood": "Neighborhood / area",
     "neighborhoodPlaceholder": "e.g. Florentin, Downtown",
+    "mapLocation": "Location on map",
     "bedrooms": "Bedrooms",
     "maxGuests": "Max guests",
     "description": "Description",
@@ -280,6 +282,7 @@
     "bedroomsAbbrev": "{count} bd",
     "upToGuests": "up to {count} guests",
     "hostedBy": "Hosted by {name}",
+    "viewOnMap": "View on map",
     "noHostsYet": "No verified hosts to show yet.",
     "requestSent": "Request sent",
     "requestSwap": "Request swap",
@@ -336,5 +339,11 @@
     "aHost": "A host",
     "noPostsYet": "No posts yet — be the first to share a hosting story.",
     "backToBlog": "← Back to blog"
+  },
+  "LocationPicker": {
+    "searchPlaceholder": "Search for an address...",
+    "search": "Search",
+    "searching": "Searching...",
+    "hint": "Click the map or search an address to drop a pin at your property."
   }
 }

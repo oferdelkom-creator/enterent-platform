@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { addListing } from "./actions";
 import { COUNTRIES } from "@/lib/countries";
 import { CITIES_BY_COUNTRY } from "@/lib/cities-by-country";
+import LocationPicker from "@/components/location-picker";
 
 const inputClasses = "w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm";
 
@@ -13,6 +14,7 @@ export default function AddListingForm() {
   const [isPending, startTransition] = useTransition();
   const [country, setCountry] = useState("");
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [mapKey, setMapKey] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function AddListingForm() {
       setCountry("");
       if (photoPreview) URL.revokeObjectURL(photoPreview);
       setPhotoPreview(null);
+      setMapKey((k) => k + 1);
     });
   }
 
@@ -107,6 +110,11 @@ export default function AddListingForm() {
       <div className="space-y-1">
         <label className="text-xs font-medium text-slate-700">{t("neighborhood")}</label>
         <input name="neighborhood" placeholder={t("neighborhoodPlaceholder")} className={inputClasses} />
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-slate-700">{t("mapLocation")}</label>
+        <LocationPicker key={mapKey} />
       </div>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">

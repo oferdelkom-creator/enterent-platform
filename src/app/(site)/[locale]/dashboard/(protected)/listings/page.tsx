@@ -26,7 +26,7 @@ export default async function DashboardListingsPage() {
     ? await supabase
         .from("listings")
         .select(
-          "id, title, city, country, neighborhood, description, photo_url, bedrooms, max_guests, airbnb_listing_url, ical_url, ical_sync_status, ical_last_synced_at, created_at"
+          "id, title, city, country, neighborhood, description, photo_url, latitude, longitude, bedrooms, max_guests, airbnb_listing_url, ical_url, ical_sync_status, ical_last_synced_at, created_at"
         )
         .eq("host_id", host.id)
         .order("created_at", { ascending: false })
@@ -80,6 +80,16 @@ export default async function DashboardListingsPage() {
                         className="text-xs text-blue-600 hover:underline"
                       >
                         {t("viewOnAirbnb")}
+                      </a>
+                    )}
+                    {listing.latitude != null && listing.longitude != null && (
+                      <a
+                        href={`https://www.google.com/maps?q=${listing.latitude},${listing.longitude}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ml-2 text-xs text-blue-600 hover:underline"
+                      >
+                        {t("viewOnMap")}
                       </a>
                     )}
                     {listing.ical_url && (
