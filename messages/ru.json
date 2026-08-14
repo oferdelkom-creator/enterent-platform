@@ -282,6 +282,7 @@
     "bedroomsAbbrev": "{count, plural, one {# спальня} few {# спальни} many {# спален} other {# спален}}",
     "upToGuests": "до {count, plural, one {# гостя} few {# гостей} many {# гостей} other {# гостей}}",
     "hostedBy": "Хозяин: {name}",
+    "viewOnAirbnb": "Смотреть на Airbnb",
     "viewOnMap": "Смотреть на карте",
     "noHostsYet": "Пока нет проверенных хозяев для показа.",
     "requestSent": "Запрос отправлен",

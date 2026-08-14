@@ -85,16 +85,28 @@ export default async function FindHostsPage({
                     <p className="mt-1 line-clamp-2 text-xs text-slate-500">{listing.description}</p>
                   )}
                   <p className="mt-1 text-xs text-slate-400">{t("hostedBy", { name: listing.host_name })}</p>
-                  {listing.latitude != null && listing.longitude != null && (
-                    <a
-                      href={`https://www.google.com/maps?q=${listing.latitude},${listing.longitude}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs text-blue-600 hover:underline"
-                    >
-                      {t("viewOnMap")}
-                    </a>
-                  )}
+                  <div className="mt-1 flex gap-3">
+                    {listing.airbnb_listing_url && (
+                      <a
+                        href={listing.airbnb_listing_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs text-blue-600 hover:underline"
+                      >
+                        {t("viewOnAirbnb")}
+                      </a>
+                    )}
+                    {listing.latitude != null && listing.longitude != null && (
+                      <a
+                        href={`https://www.google.com/maps?q=${listing.latitude},${listing.longitude}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs text-blue-600 hover:underline"
+                      >
+                        {t("viewOnMap")}
+                      </a>
+                    )}
+                  </div>
                 </div>
                 {host && (
                   <RequestPanel

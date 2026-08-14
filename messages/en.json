@@ -282,6 +282,7 @@
     "bedroomsAbbrev": "{count} bd",
     "upToGuests": "up to {count} guests",
     "hostedBy": "Hosted by {name}",
+    "viewOnAirbnb": "View on Airbnb",
     "viewOnMap": "View on map",
     "noHostsYet": "No verified hosts to show yet.",
     "requestSent": "Request sent",
