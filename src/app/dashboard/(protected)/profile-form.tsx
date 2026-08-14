@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { updateHostProfile } from "./actions";
+import PhoneInput from "@/components/phone-input";
 
 type Host = {
   full_name: string;
@@ -51,12 +52,7 @@ export default function ProfileForm({ host }: { host: Host | null }) {
 
       <div className="space-y-1">
         <label className="text-sm font-medium text-slate-700">Phone</label>
-        <input
-          name="phone"
-          type="tel"
-          defaultValue={host?.phone ?? ""}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
-        />
+        <PhoneInput name="phone" defaultValue={host?.phone} />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
