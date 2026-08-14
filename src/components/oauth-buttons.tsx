@@ -32,15 +32,6 @@ export default function OAuthButtons({
     try {
       const supabase = createClient();
 
-      await supabase.from("oauth_debug_log").insert({
-        event: "oauth_initiated",
-        details: {
-          provider,
-          origin: window.location.origin,
-          href: window.location.href,
-        },
-      });
-
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
