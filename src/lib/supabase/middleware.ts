@@ -1,8 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request });
+export async function updateSession(
+  request: NextRequest,
+  baseResponse: NextResponse,
+  options: { protectedPrefix: string; loginPath: string; publicPaths?: string[] }
+) {
+  let supabaseResponse = baseResponse;
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -27,21 +31,13 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const publicAdminRoutes = ["/admin/login", "/admin/forgot-password", "/admin/reset-password"];
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
-  const isPublicAdminRoute = publicAdminRoutes.includes(request.nextUrl.pathname);
+  const { pathname } = request.nextUrl;
+  const isProtected = pathname.startsWith(options.protectedPrefix);
+  const isPublic = options.publicPaths?.includes(pathname) ?? false;
 
-  if (isAdminRoute && !isPublicAdminRoute && !user) {
+  if (isProtected && !isPublic && !user) {
     const url = request.nextUrl.clone();
-    url.pathname = "/admin/login";
-    return NextResponse.redirect(url);
-  }
-
-  const isDashboardRoute = request.nextUrl.pathname.startsWith("/dashboard");
-
-  if (isDashboardRoute && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = options.loginPath;
     return NextResponse.redirect(url);
   }
 

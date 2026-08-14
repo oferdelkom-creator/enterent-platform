@@ -1,0 +1,340 @@
+{
+  "Metadata": {
+    "title": "EnterRent — Verified Airbnb Host Swap & Backup Network",
+    "description": "A trusted network for verified Airbnb hosts to swap stays with hosts abroad or find emergency backup hosting when a confirmed booking can't be honored.",
+    "ogDescription": "Connect your Airbnb listing, get verified, and swap stays or find emergency backup hosting with hosts around the world."
+  },
+  "LanguageSwitcher": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "Landing": {
+    "nav": {
+      "blog": "Blog",
+      "login": "Log in"
+    },
+    "hero": {
+      "title": "A trusted network for verified Airbnb hosts to swap stays and cover each other in an emergency",
+      "subtitle": "Connect your Airbnb listing, get verified, and find another host nearby to trade vacations with — or to step in when your place suddenly can't host a confirmed booking.",
+      "joinCta": "Join as a host"
+    },
+    "howItWorks": {
+      "title": "How it works"
+    },
+    "steps": [
+      {
+        "title": "1. Connect your listing",
+        "description": "Add your Airbnb profile link and property details. Connect your calendar so hosts can see real availability."
+      },
+      {
+        "title": "2. Get verified",
+        "description": "Our team reviews your host profile before you're discoverable to other verified hosts on the network."
+      },
+      {
+        "title": "3. Swap or ask for backup",
+        "description": "Browse verified hosts, propose a stay swap for your own vacation, or request emergency backup hosting when your place suddenly can't take a confirmed booking."
+      }
+    ],
+    "useCasesTitle": "Two ways to use EnterRent",
+    "useCases": [
+      {
+        "title": "Stay swaps",
+        "description": "Trade vacations with a verified host in another city or country — you stay at their place while they stay at yours, for the dates you both agree on."
+      },
+      {
+        "title": "Emergency backup",
+        "description": "When a burst pipe, a lockout, or a last-minute issue means your place can't host a confirmed booking, find another verified host nearby who can step in."
+      }
+    ],
+    "readyToJoin": {
+      "title": "Ready to join?",
+      "subtitle": "It's free to create a host profile and get verified."
+    },
+    "footer": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy"
+    }
+  },
+  "Login": {
+    "heading": "Log in to EnterRent",
+    "subtitle": "Welcome back.",
+    "or": "or",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in...",
+    "submit": "Log in",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "unexpectedErrorPrefix": "Unexpected error:",
+    "unexpectedError": "Unexpected error contacting the server. Please try again."
+  },
+  "Signup": {
+    "heading": "Join EnterRent",
+    "subtitle": "Create your host account to swap stays or find emergency backup hosting.",
+    "or": "or",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "agreePrefix": "I agree to the",
+    "and": "and",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "creatingAccount": "Creating account...",
+    "submit": "Sign up",
+    "haveAccount": "Already have an account?",
+    "logIn": "Log in",
+    "mustAgree": "You must agree to the Terms of Service and Privacy Policy to continue.",
+    "failedToCreate": "Failed to create account",
+    "unexpectedError": "Unexpected error contacting the server. Please try again.",
+    "checkEmailTitle": "Check your email",
+    "checkEmailBody": "We sent a confirmation link to {email}. Click it to activate your account, then log in."
+  },
+  "OAuthButtons": {
+    "continueWith": {
+      "google": "Continue with Google",
+      "facebook": "Continue with Facebook"
+    },
+    "redirecting": "Redirecting...",
+    "unexpectedErrorPrefix": "Unexpected error:",
+    "unexpectedError": "Unexpected error contacting the server. Please try again."
+  },
+  "Terms": {
+    "back": "← Back to EnterRent",
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: August 2026",
+    "contactTitle": "13. Contact",
+    "contactBody": "Questions about these Terms can be sent to",
+    "disclaimer": "This document is a general-purpose template and has not been reviewed by a lawyer. It is not legal advice. Before onboarding real users, have these Terms reviewed by a qualified attorney familiar with Israeli law and the risks specific to a property-swap platform.",
+    "sections": [
+      {
+        "title": "1. Who we are",
+        "body": "EnterRent is operated by Delkom Ltd (\"EnterRent\", \"we\", \"us\"). These Terms of Service (\"Terms\") govern your access to and use of the EnterRent website and services (the \"Service\"). By creating an account or using the Service, you agree to these Terms."
+      },
+      {
+        "title": "2. What EnterRent is — and isn't",
+        "body": "EnterRent is a matching platform that helps verified Airbnb hosts find other hosts to (a) swap stays for personal travel, or (b) provide emergency backup hosting when a confirmed booking can no longer be honored at the original property.\n\nEnterRent is not a party to any arrangement made between hosts. We do not own, manage, book, or control any property listed or discussed through the Service. Any swap, backup hosting arrangement, payment, or other agreement between users is solely between those users. EnterRent is not a real estate broker, property manager, insurer, or travel agent."
+      },
+      {
+        "title": "3. Eligibility and accounts",
+        "body": "You must be at least 18 years old and able to form a binding contract to use the Service. You are responsible for the accuracy of the information in your profile and listings, and for keeping your account credentials secure."
+      },
+      {
+        "title": "4. Verification",
+        "body": "EnterRent may review host profiles and mark them as \"verified\" based on information the host provides, such as a linked Airbnb profile. Verification is not a guarantee of a host's identity, the condition of their property, or the accuracy of any information they provide. You are responsible for exercising your own judgment before entering into any arrangement with another user."
+      },
+      {
+        "title": "5. Calendar and listing data",
+        "body": "If you connect an iCal calendar URL, EnterRent reads availability data from that feed to display on your listing. You are responsible for the accuracy of your listing information and calendar data. EnterRent does not guarantee that synced calendar data is complete, current, or error-free."
+      },
+      {
+        "title": "6. User responsibility and assumption of risk",
+        "body": "Arranging a stay swap or emergency backup hosting with another user involves inherent risks, including property damage, disputes, safety concerns, and financial loss. You agree that any such arrangement is at your own risk, and that EnterRent is not responsible or liable for the conduct of any user, the condition of any property, or any dispute, loss, injury, or damage arising from an arrangement made through the Service."
+      },
+      {
+        "title": "7. Prohibited conduct",
+        "body": "You agree not to misuse the Service, including by providing false information, impersonating another person or property, harassing other users, or using the Service for any unlawful purpose."
+      },
+      {
+        "title": "8. Termination",
+        "body": "We may suspend or terminate your account at our discretion, including for violation of these Terms. You may stop using the Service and request deletion of your account at any time."
+      },
+      {
+        "title": "9. Disclaimers and limitation of liability",
+        "body": "The Service is provided \"as is\" without warranties of any kind. To the maximum extent permitted by law, EnterRent and Delkom Ltd disclaim all warranties and will not be liable for any indirect, incidental, special, or consequential damages, or for any loss of property, income, or data, arising from your use of the Service or any arrangement made with another user."
+      },
+      {
+        "title": "10. Indemnification",
+        "body": "You agree to indemnify and hold harmless EnterRent and Delkom Ltd from any claims, damages, or expenses arising from your use of the Service, your listings, or your arrangements with other users."
+      },
+      {
+        "title": "11. Governing law",
+        "body": "These Terms are governed by the laws of the State of Israel, without regard to conflict-of-law principles. Any dispute arising from these Terms or the Service will be subject to the exclusive jurisdiction of the competent courts in Israel."
+      },
+      {
+        "title": "12. Changes to these Terms",
+        "body": "We may update these Terms from time to time. Continued use of the Service after a change constitutes acceptance of the updated Terms."
+      }
+    ]
+  },
+  "Privacy": {
+    "back": "← Back to EnterRent",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: August 2026",
+    "contactTitle": "8. Contact",
+    "contactBody": "Questions about this policy can be sent to",
+    "disclaimer": "This document is a general-purpose template and has not been reviewed by a lawyer. Before onboarding real users, have this policy reviewed for compliance with applicable privacy law (e.g. Israel's Privacy Protection Law, and GDPR if you expect EU users).",
+    "sections": [
+      {
+        "title": "1. Who we are",
+        "body": "EnterRent is operated by Delkom Ltd. This policy explains what information we collect when you use EnterRent and how we use it."
+      },
+      {
+        "title": "2. Information we collect",
+        "body": "• Account information: name, email address, phone number, city, country.\n• Listing information: property details, Airbnb listing links, and calendar availability data retrieved from an iCal URL you provide.\n• If you sign in with Google or Facebook, we receive your name, email, and profile photo from that provider.\n• Requests and messages you send to other hosts through the Service."
+      },
+      {
+        "title": "3. How we use this information",
+        "body": "We use your information to operate the Service: creating and verifying your profile, displaying your listings to other verified hosts, matching swap and backup requests, syncing calendar availability, and sending account-related emails (verification, password resets, invites)."
+      },
+      {
+        "title": "4. Sharing with other users",
+        "body": "Your name, city/country, and listing details are visible to other verified hosts on the Service so they can evaluate a potential swap or backup arrangement. Your email and phone number are not shown to other users unless you choose to share them directly."
+      },
+      {
+        "title": "5. Third-party service providers",
+        "body": "We use Supabase for authentication and data storage, and Resend for transactional email delivery. These providers process your data on our behalf and are bound by their own data protection obligations."
+      },
+      {
+        "title": "6. Data retention and deletion",
+        "body": "We retain your account data for as long as your account is active. You can request deletion of your account and associated data at any time by contacting us."
+      },
+      {
+        "title": "7. Your rights",
+        "body": "You may access, correct, or delete your personal information at any time from your account, or by contacting us."
+      }
+    ]
+  },
+  "DashboardNav": {
+    "profile": "Profile",
+    "myListings": "My listings",
+    "findHosts": "Find hosts",
+    "requests": "Requests",
+    "blog": "Blog",
+    "signOut": "Sign out"
+  },
+  "Profile": {
+    "title": "Your profile",
+    "subtitle": "Keep this up to date — verified hosts get priority for swaps and backup requests.",
+    "verificationStatus": "Verification status",
+    "status": {
+      "pending": "pending",
+      "verified": "verified",
+      "rejected": "rejected"
+    },
+    "fullName": "Full name",
+    "phone": "Phone",
+    "location": "Location",
+    "airbnbProfile": "Airbnb profile",
+    "editProfile": "Edit profile",
+    "contactDetails": "Contact details",
+    "country": "Country",
+    "selectCountry": "Select a country",
+    "city": "City",
+    "startTyping": "Start typing...",
+    "airbnbHosting": "Airbnb hosting",
+    "airbnbProfileUrl": "Airbnb profile URL",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "saveProfile": "Save profile"
+  },
+  "Listings": {
+    "title": "Your listings",
+    "subtitle": "Add as many properties as you manage — there's no limit.",
+    "noPhoto": "No photo",
+    "noLocationSet": "No location set",
+    "bedroomsAbbrev": "{count} bd",
+    "upToGuests": "up to {count} guests",
+    "viewOnAirbnb": "View on Airbnb",
+    "calendarPrefix": "calendar:",
+    "syncStatus": {
+      "not_connected": "not connected",
+      "ok": "ok",
+      "error": "error"
+    },
+    "synced": "synced {date}",
+    "noListingsYet": "No listings yet — add your first one."
+  },
+  "AddListing": {
+    "heading": "Add a listing",
+    "title": "Title",
+    "photo": "Photo",
+    "photoPreviewAlt": "Listing preview",
+    "country": "Country",
+    "selectCountry": "Select a country",
+    "city": "City",
+    "startTyping": "Start typing...",
+    "neighborhood": "Neighborhood / area",
+    "neighborhoodPlaceholder": "e.g. Florentin, Downtown",
+    "bedrooms": "Bedrooms",
+    "maxGuests": "Max guests",
+    "description": "Description",
+    "descriptionPlaceholder": "A short description other hosts will see...",
+    "airbnbListingUrl": "Airbnb listing URL",
+    "icalUrl": "iCal URL",
+    "icalHint": "Find this under your Airbnb listing → Availability → Sync calendars → Export calendar.",
+    "adding": "Adding...",
+    "submit": "Add listing",
+    "remove": "Remove",
+    "syncing": "Syncing...",
+    "syncCalendar": "Sync calendar",
+    "syncFailed": "Sync failed"
+  },
+  "Find": {
+    "title": "Find hosts",
+    "subtitle": "Browse verified hosts to propose a stay swap or request emergency backup.",
+    "city": "City",
+    "country": "Country",
+    "filter": "Filter",
+    "noPhotoYet": "No photo yet",
+    "noLocationSet": "No location set",
+    "bedroomsAbbrev": "{count} bd",
+    "upToGuests": "up to {count} guests",
+    "hostedBy": "Hosted by {name}",
+    "noHostsYet": "No verified hosts to show yet.",
+    "requestSent": "Request sent",
+    "requestSwap": "Request swap",
+    "requestBackup": "Request backup",
+    "proposeSwap": "Propose a stay swap",
+    "askForBackup": "Ask for emergency backup",
+    "offerWhichListing": "Offer which of your listings?",
+    "shortMessage": "Short message...",
+    "sending": "Sending...",
+    "sendRequest": "Send request",
+    "cancel": "Cancel"
+  },
+  "Requests": {
+    "title": "Requests",
+    "subtitle": "Swap and emergency backup requests.",
+    "completeProfileFirst": "Complete your profile first.",
+    "staySwap": "Stay swap",
+    "emergencyBackup": "Emergency backup",
+    "unknownHost": "Unknown host",
+    "noDatesSpecified": "No dates specified",
+    "status": {
+      "pending": "pending",
+      "accepted": "accepted",
+      "declined": "declined",
+      "cancelled": "cancelled",
+      "completed": "completed"
+    },
+    "incoming": "Incoming",
+    "outgoing": "Outgoing",
+    "noIncoming": "No incoming requests.",
+    "noOutgoing": "No outgoing requests.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "cancel": "Cancel"
+  },
+  "DashboardBlog": {
+    "title": "Your blog posts",
+    "subtitle": "Share your hosting stories with the EnterRent community.",
+    "viewPublicBlog": "View public blog",
+    "noPostsYet": "You haven't published anything yet.",
+    "writePost": "Write a post",
+    "postTitle": "Title",
+    "story": "Story",
+    "storyPlaceholder": "Share how your swap or backup hosting experience went...",
+    "publishing": "Publishing...",
+    "publish": "Publish",
+    "delete": "Delete"
+  },
+  "PublicBlog": {
+    "kicker": "EnterRent Blog",
+    "title": "Hosting stories",
+    "subtitle": "Swap experiences, backup-hosting stories, and tips shared by the community.",
+    "writePost": "Write a post",
+    "aHost": "A host",
+    "noPostsYet": "No posts yet — be the first to share a hosting story.",
+    "backToBlog": "← Back to blog"
+  }
+}

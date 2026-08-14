@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { routing } from "@/i18n/routing";
 
-const providers = [
-  { id: "google" as const, label: "Continue with Google" },
-  { id: "facebook" as const, label: "Continue with Facebook" },
-];
+const providers = ["google", "facebook"] as const;
 
 export default function OAuthButtons({
   redirectPath,
@@ -17,10 +16,12 @@ export default function OAuthButtons({
   disabled?: boolean;
   onDisabledClick?: () => void;
 }) {
+  const t = useTranslations("OAuthButtons");
+  const locale = useLocale();
   const [error, setError] = useState<string | null>(null);
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
 
-  async function handleOAuth(provider: "google" | "facebook") {
+  async function handleOAuth(provider: (typeof providers)[number]) {
     if (disabled) {
       onDisabledClick?.();
       return;
@@ -31,11 +32,12 @@ export default function OAuthButtons({
 
     try {
       const supabase = createClient();
+      const localePrefix = locale === routing.defaultLocale ? "" : `/${locale}`;
 
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=${redirectPath}`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${localePrefix}${redirectPath}`,
         },
       });
 
@@ -46,11 +48,7 @@ export default function OAuthButtons({
       // On success the browser navigates away to the provider, so no further
       // state update is needed (or possible) here.
     } catch (e) {
-      setError(
-        e instanceof Error
-          ? `Unexpected error: ${e.message}`
-          : "Unexpected error contacting the server. Please try again."
-      );
+      setError(e instanceof Error ? `${t("unexpectedErrorPrefix")} ${e.message}` : t("unexpectedError"));
       setLoadingProvider(null);
     }
   }
@@ -59,13 +57,13 @@ export default function OAuthButtons({
     <div className="space-y-2">
       {providers.map((p) => (
         <button
-          key={p.id}
+          key={p}
           type="button"
           disabled={loadingProvider !== null}
-          onClick={() => handleOAuth(p.id)}
+          onClick={() => handleOAuth(p)}
           className="w-full rounded-md border border-slate-300 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {loadingProvider === p.id ? "Redirecting..." : p.label}
+          {loadingProvider === p ? t("redirecting") : t(`continueWith.${p}`)}
         </button>
       ))}
       {error && <p className="text-xs text-red-600">{error}</p>}
