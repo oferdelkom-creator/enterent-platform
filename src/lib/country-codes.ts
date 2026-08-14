@@ -25,7 +25,7 @@ export const COUNTRY_CODES: CountryCode[] = [
   { iso2: "DK", name: "Denmark", dialCode: "+45", flag: "🇩🇰" },
   { iso2: "FI", name: "Finland", dialCode: "+358", flag: "🇫🇮" },
   { iso2: "PL", name: "Poland", dialCode: "+48", flag: "🇵🇱" },
-  { iso2: "CZ", name: "Czech Republic", dialCode: "+420", flag: "🇨🇿" },
+  { iso2: "CZ", name: "Czechia", dialCode: "+420", flag: "🇨🇿" },
   { iso2: "GR", name: "Greece", dialCode: "+30", flag: "🇬🇷" },
   { iso2: "TR", name: "Turkey", dialCode: "+90", flag: "🇹🇷" },
   { iso2: "CY", name: "Cyprus", dialCode: "+357", flag: "🇨🇾" },
@@ -109,16 +109,14 @@ const TIMEZONE_TO_ISO2: Record<string, string> = {
   "America/Santiago": "CL",
 };
 
-export function detectDefaultDialCode(): string {
-  const fallback = "+1";
-  if (typeof window === "undefined") return fallback;
+function detectIso2(): string | null {
+  if (typeof window === "undefined") return null;
 
   try {
     const locale = navigator.language || navigator.languages?.[0];
     const region = locale?.split("-")[1]?.toUpperCase();
-    if (region) {
-      const match = COUNTRY_CODES.find((c) => c.iso2 === region);
-      if (match) return match.dialCode;
+    if (region && COUNTRY_CODES.some((c) => c.iso2 === region)) {
+      return region;
     }
   } catch {
     // ignore, fall through to timezone-based detection
@@ -127,13 +125,22 @@ export function detectDefaultDialCode(): string {
   try {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const iso2 = TIMEZONE_TO_ISO2[timeZone];
-    if (iso2) {
-      const match = COUNTRY_CODES.find((c) => c.iso2 === iso2);
-      if (match) return match.dialCode;
-    }
+    if (iso2) return iso2;
   } catch {
-    // ignore, use fallback
+    // ignore, no detection available
   }
 
-  return fallback;
+  return null;
+}
+
+export function detectDefaultDialCode(): string {
+  const iso2 = detectIso2();
+  const match = iso2 && COUNTRY_CODES.find((c) => c.iso2 === iso2);
+  return match ? match.dialCode : "+1";
+}
+
+export function detectDefaultCountryName(): string | null {
+  const iso2 = detectIso2();
+  const match = iso2 && COUNTRY_CODES.find((c) => c.iso2 === iso2);
+  return match ? match.name : null;
 }
