@@ -209,6 +209,8 @@
   "Profile": {
     "title": "Your profile",
     "subtitle": "Keep this up to date — verified hosts get priority for swaps and backup requests.",
+    "statListings": "My listings",
+    "statPendingRequests": "Pending requests",
     "verificationStatus": "Verification status",
     "status": {
       "pending": "pending",
