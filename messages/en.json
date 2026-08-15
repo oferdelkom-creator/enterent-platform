@@ -26,15 +26,15 @@
     "steps": [
       {
         "title": "1. Connect your listing",
-        "description": "Add your Airbnb profile link and property details. Connect your calendar so hosts can see real availability."
+        "description": "Add your Airbnb link + property details. Sync your calendar so we see real availability."
       },
       {
         "title": "2. Get verified",
-        "description": "Our team reviews your host profile before you're discoverable to other verified hosts on the network."
+        "description": "Our team reviews your profile. Only verified hosts can join the network."
       },
       {
-        "title": "3. Swap or ask for backup",
-        "description": "Browse verified hosts, propose a stay swap for your own vacation, or request emergency backup hosting when your place suddenly can't take a confirmed booking."
+        "title": "3. Swap or get backup",
+        "description": "Browse hosts worldwide. Swap empty nights for free vacations. Or request instant backup hosting if you need to relocate a guest."
       }
     ],
     "useCasesTitle": "Two ways to use EnterRent",
