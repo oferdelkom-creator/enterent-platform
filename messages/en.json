@@ -14,10 +14,12 @@
       "login": "Log in"
     },
     "hero": {
-      "title": "A trusted network for verified Airbnb hosts to swap stays and cover each other in an emergency",
-      "subtitle": "Connect your Airbnb listing, get verified, and find another host nearby to trade vacations with — or to step in when your place suddenly can't host a confirmed booking.",
-      "joinCta": "Join as a host"
+      "title": "The host network that has your back",
+      "subtitle": "Swap stays with verified Airbnb hosts for free. Or book an instant backup stay when you need to relocate a guest.",
+      "joinCta": "Join as a Host",
+      "howItWorksCta": "How It Works"
     },
+    "trustBadges": ["Free Swaps", "Emergency Coverage", "Verified Hosts"],
     "howItWorks": {
       "title": "How it works"
     },

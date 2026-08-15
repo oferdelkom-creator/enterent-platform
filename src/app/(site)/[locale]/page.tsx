@@ -30,25 +30,36 @@ export default function Home() {
       </header>
 
       <section className="flex w-full flex-col items-center bg-brand-navy px-6 py-20 text-center text-white">
-        <h1 className="mt-3 max-w-2xl text-3xl font-semibold sm:text-4xl">{t("hero.title")}</h1>
+        <h1 className="mt-3 max-w-2xl text-3xl font-semibold uppercase tracking-tight sm:text-4xl">
+          {t("hero.title")}
+        </h1>
         <p className="mt-4 max-w-xl text-sm text-slate-300">{t("hero.subtitle")}</p>
-        <div className="mt-8 flex gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             href="/signup"
             className="rounded-md bg-brand-teal px-5 py-2.5 text-sm font-medium text-brand-navy-dark hover:bg-brand-teal-dark hover:text-white"
           >
             {t("hero.joinCta")}
           </Link>
-          <Link
-            href="/login"
+          <a
+            href="#how-it-works"
             className="rounded-md border border-white/30 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10"
           >
-            {t("nav.login")}
-          </Link>
+            {t("hero.howItWorksCta")}
+          </a>
+        </div>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-slate-300">
+          {[0, 1, 2].map((i) => (
+            <span key={i} className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-teal" />
+              {t(`trustBadges.${i}`)}
+            </span>
+          ))}
         </div>
       </section>
 
-      <section className="w-full max-w-4xl px-6 py-16">
+      <section id="how-it-works" className="w-full max-w-4xl scroll-mt-6 px-6 py-16">
         <h2 className="text-center text-xl font-semibold text-slate-900">{t("howItWorks.title")}</h2>
         <div className="mt-8 grid gap-6 sm:grid-cols-3">
           {steps.map((step) => (
