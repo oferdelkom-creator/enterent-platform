@@ -1,0 +1,181 @@
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import { Logo } from "@/components/logo";
+import LanguageSwitcher from "@/components/language-switcher";
+import { createClient } from "@/lib/supabase/server";
+import RequestPanel from "../dashboard/(protected)/find/request-panel";
+
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string; city?: string; country?: string }>;
+}) {
+  const { type, city, country } = await searchParams;
+  const requestType = type === "backup" ? "backup" : "swap";
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: host } = user
+    ? await supabase.from("hosts").select("id").eq("user_id", user.id).maybeSingle()
+    : { data: null };
+
+  const { data: ownListings } = host
+    ? await supabase.from("listings").select("id, title").eq("host_id", host.id)
+    : { data: [] };
+
+  let query = supabase.from("discoverable_listings").select("*").order("created_at", { ascending: false });
+  if (city) query = query.ilike("city", `%${city}%`);
+  if (country) query = query.ilike("country", `%${country}%`);
+
+  const { data: listings } = await query;
+  const otherListings = (listings ?? []).filter((l) => l.host_id !== host?.id);
+
+  const t = await getTranslations("Search");
+
+  const tabHref = (nextType: "swap" | "backup") => {
+    const params = new URLSearchParams();
+    params.set("type", nextType);
+    if (city) params.set("city", city);
+    if (country) params.set("country", country);
+    return `/search?${params.toString()}`;
+  };
+
+  return (
+    <main className="min-h-screen bg-slate-50">
+      <header className="flex w-full items-center justify-between px-6 py-4">
+        <Logo />
+        <nav className="flex items-center gap-4 text-sm">
+          <Link href="/login" className="text-slate-600 hover:text-slate-900">
+            {t("logIn")}
+          </Link>
+          <LanguageSwitcher />
+        </nav>
+      </header>
+
+      <div className="mx-auto max-w-4xl px-6 pb-16">
+        <h1 className="text-xl font-semibold text-slate-900">{t("title")}</h1>
+        <p className="mt-1 text-sm text-slate-500">{t("subtitle")}</p>
+
+        <div className="mt-6 flex gap-2 border-b border-slate-200">
+          <Link
+            href={tabHref("swap")}
+            className={`px-4 py-2 text-sm font-medium ${
+              requestType === "swap"
+                ? "border-b-2 border-brand-navy text-brand-navy"
+                : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            {t("tabSwap")}
+          </Link>
+          <Link
+            href={tabHref("backup")}
+            className={`px-4 py-2 text-sm font-medium ${
+              requestType === "backup"
+                ? "border-b-2 border-brand-navy text-brand-navy"
+                : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            {t("tabBackup")}
+          </Link>
+        </div>
+
+        <form className="mt-4 flex gap-2">
+          <input type="hidden" name="type" value={requestType} />
+          <input
+            name="city"
+            defaultValue={city}
+            placeholder={t("city")}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
+          />
+          <input
+            name="country"
+            defaultValue={country}
+            placeholder={t("country")}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
+          />
+          <button type="submit" className="rounded-md bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+            {t("filter")}
+          </button>
+        </form>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          {otherListings.length ? (
+            otherListings.map((listing) => (
+              <div
+                key={listing.id}
+                className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+              >
+                {listing.photo_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={listing.photo_url} alt={listing.title} className="h-40 w-full object-cover" />
+                ) : (
+                  <div className="flex h-40 w-full items-center justify-center bg-slate-100 text-xs text-slate-400">
+                    {t("noPhotoYet")}
+                  </div>
+                )}
+                <div className="space-y-2 p-4">
+                  <div>
+                    <p className="font-medium text-slate-900">{listing.title}</p>
+                    <p className="text-xs text-slate-500">
+                      {[listing.neighborhood, listing.city, listing.country].filter(Boolean).join(", ") ||
+                        t("noLocationSet")}
+                      {listing.bedrooms ? ` · ${t("bedroomsAbbrev", { count: listing.bedrooms })}` : ""}
+                      {listing.max_guests ? ` · ${t("upToGuests", { count: listing.max_guests })}` : ""}
+                    </p>
+                    {listing.description && (
+                      <p className="mt-1 line-clamp-2 text-xs text-slate-500">{listing.description}</p>
+                    )}
+                    <p className="mt-1 text-xs text-slate-400">{t("hostedBy", { name: listing.host_name })}</p>
+                    <div className="mt-1 flex gap-3">
+                      {listing.airbnb_listing_url && (
+                        <a
+                          href={listing.airbnb_listing_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs text-blue-600 hover:underline"
+                        >
+                          {t("viewOnAirbnb")}
+                        </a>
+                      )}
+                      {listing.latitude != null && listing.longitude != null && (
+                        <a
+                          href={`https://www.google.com/maps?q=${listing.latitude},${listing.longitude}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs text-blue-600 hover:underline"
+                        >
+                          {t("viewOnMap")}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  {host ? (
+                    <RequestPanel
+                      targetHostId={listing.host_id}
+                      targetListingId={listing.id}
+                      ownListings={ownListings ?? []}
+                    />
+                  ) : (
+                    <Link
+                      href="/signup"
+                      className="inline-block rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-slate-800"
+                    >
+                      {requestType === "swap" ? t("signUpToSwap") : t("signUpToRequestBackup")}
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-400 sm:col-span-2">
+              {t("noHostsYet")}
+            </div>
+          )}
+        </div>
+      </div>
+    </main>
+  );
+}

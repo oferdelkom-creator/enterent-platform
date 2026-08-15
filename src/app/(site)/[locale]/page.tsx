@@ -12,6 +12,7 @@ export default function Home() {
   const useCases = [0, 1].map((i) => ({
     title: t(`useCases.${i}.title`),
     description: t(`useCases.${i}.description`),
+    searchType: i === 0 ? "swap" : "backup",
   }));
 
   return (
@@ -82,6 +83,12 @@ export default function Home() {
               >
                 <p className="text-lg font-semibold text-brand-navy">{useCase.title}</p>
                 <p className="mt-2 text-sm text-slate-600">{useCase.description}</p>
+                <Link
+                  href={`/search?type=${useCase.searchType}`}
+                  className="mt-4 inline-block rounded-md bg-brand-navy px-4 py-2 text-sm font-medium text-white hover:bg-brand-navy-light"
+                >
+                  {useCase.searchType === "swap" ? t("useCases.0.searchCta") : t("useCases.1.searchCta")}
+                </Link>
               </div>
             ))}
           </div>

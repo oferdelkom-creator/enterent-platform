@@ -41,11 +41,13 @@
     "useCases": [
       {
         "title": "Stay swaps",
-        "description": "Trade vacations with a verified host in another city or country — you stay at their place while they stay at yours, for the dates you both agree on."
+        "description": "Trade vacations with a verified host in another city or country — you stay at their place while they stay at yours, for the dates you both agree on.",
+        "searchCta": "Search Home Swap"
       },
       {
         "title": "Emergency backup",
-        "description": "When a burst pipe, a lockout, or a last-minute issue means your place can't host a confirmed booking, find another verified host nearby who can step in."
+        "description": "When a burst pipe, a lockout, or a last-minute issue means your place can't host a confirmed booking, find another verified host nearby who can step in.",
+        "searchCta": "Search Backup"
       }
     ],
     "readyToJoin": {
@@ -342,6 +344,26 @@
     "aHost": "A host",
     "noPostsYet": "No posts yet — be the first to share a hosting story.",
     "backToBlog": "← Back to blog"
+  },
+  "Search": {
+    "logIn": "Log in",
+    "title": "Search hosts",
+    "subtitle": "Browse verified hosts — no account needed to look, just to reach out.",
+    "tabSwap": "Home Swap",
+    "tabBackup": "Backup",
+    "city": "City",
+    "country": "Country",
+    "filter": "Filter",
+    "noPhotoYet": "No photo yet",
+    "noLocationSet": "No location set",
+    "bedroomsAbbrev": "{count} bd",
+    "upToGuests": "up to {count} guests",
+    "hostedBy": "Hosted by {name}",
+    "viewOnAirbnb": "View on Airbnb",
+    "viewOnMap": "View on map",
+    "noHostsYet": "No verified hosts to show yet.",
+    "signUpToSwap": "Sign up to request a swap",
+    "signUpToRequestBackup": "Sign up to request backup"
   },
   "LocationPicker": {
     "searchPlaceholder": "Search for an address...",
