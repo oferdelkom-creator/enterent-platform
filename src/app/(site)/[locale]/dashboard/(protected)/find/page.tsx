@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { formatBackupPrice } from "@/lib/currencies";
 import RequestPanel from "./request-panel";
 
 export default async function FindHostsPage({
@@ -83,6 +84,13 @@ export default async function FindHostsPage({
                   </p>
                   {listing.description && (
                     <p className="mt-1 line-clamp-2 text-xs text-slate-500">{listing.description}</p>
+                  )}
+                  {listing.backup_price_per_night != null && (
+                    <p className="mt-1 text-xs font-medium text-brand-teal-dark">
+                      {t("backupRate", {
+                        price: formatBackupPrice(listing.backup_price_per_night, listing.backup_currency)!,
+                      })}
+                    </p>
                   )}
                   <p className="mt-1 text-xs text-slate-400">{t("hostedBy", { name: listing.host_name })}</p>
                   <div className="mt-1 flex gap-3">

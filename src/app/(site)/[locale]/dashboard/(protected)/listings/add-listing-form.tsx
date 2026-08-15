@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { addListing } from "./actions";
 import { COUNTRIES } from "@/lib/countries";
 import { CITIES_BY_COUNTRY } from "@/lib/cities-by-country";
+import { CURRENCIES } from "@/lib/currencies";
 import LocationPicker from "@/components/location-picker";
 
 const inputClasses = "w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm";
@@ -126,6 +127,28 @@ export default function AddListingForm() {
           <label className="text-xs font-medium text-slate-700">{t("maxGuests")}</label>
           <input name="max_guests" type="number" min={0} className={inputClasses} />
         </div>
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-slate-700">{t("backupPrice")}</label>
+        <div className="flex gap-2">
+          <input
+            name="backup_price_per_night"
+            type="number"
+            min={0}
+            step="0.01"
+            placeholder={t("backupPricePlaceholder")}
+            className={inputClasses}
+          />
+          <select name="backup_currency" defaultValue="USD" className="w-24 shrink-0 rounded-md border border-slate-300 px-2 py-1.5 text-sm">
+            {CURRENCIES.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.code}
+              </option>
+            ))}
+          </select>
+        </div>
+        <p className="text-[11px] text-slate-400">{t("backupPriceHint")}</p>
       </div>
 
       <div className="space-y-1">

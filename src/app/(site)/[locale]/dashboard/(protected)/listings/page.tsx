@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { formatBackupPrice } from "@/lib/currencies";
 import AddListingForm from "./add-listing-form";
 import DeleteListingButton from "./delete-listing-button";
 import SyncButton from "./sync-button";
@@ -26,7 +27,7 @@ export default async function DashboardListingsPage() {
     ? await supabase
         .from("listings")
         .select(
-          "id, title, city, country, neighborhood, description, photo_url, latitude, longitude, bedrooms, max_guests, airbnb_listing_url, ical_url, ical_sync_status, ical_last_synced_at, created_at"
+          "id, title, city, country, neighborhood, description, photo_url, latitude, longitude, bedrooms, max_guests, airbnb_listing_url, ical_url, ical_sync_status, ical_last_synced_at, backup_price_per_night, backup_currency, created_at"
         )
         .eq("host_id", host.id)
         .order("created_at", { ascending: false })
@@ -71,6 +72,13 @@ export default async function DashboardListingsPage() {
                     </p>
                     {listing.description && (
                       <p className="mt-1 max-w-sm text-xs text-slate-500">{listing.description}</p>
+                    )}
+                    {listing.backup_price_per_night != null && (
+                      <p className="mt-1 text-xs font-medium text-brand-teal-dark">
+                        {t("backupRate", {
+                          price: formatBackupPrice(listing.backup_price_per_night, listing.backup_currency)!,
+                        })}
+                      </p>
                     )}
                     {listing.airbnb_listing_url && (
                       <a

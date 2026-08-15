@@ -19,7 +19,11 @@
       "joinCta": "Join as a Host",
       "howItWorksCta": "How It Works"
     },
-    "trustBadges": ["Free Swaps", "Emergency Coverage", "Verified Hosts"],
+    "trustBadges": [
+      "Free Swaps",
+      "Emergency Coverage",
+      "Verified Hosts"
+    ],
     "howItWorks": {
       "title": "How it works"
     },
@@ -249,7 +253,8 @@
       "error": "error"
     },
     "synced": "synced {date}",
-    "noListingsYet": "No listings yet — add your first one."
+    "noListingsYet": "No listings yet — add your first one.",
+    "backupRate": "Backup rate: {price}/night"
   },
   "AddListing": {
     "heading": "Add a listing",
@@ -265,6 +270,9 @@
     "mapLocation": "Location on map",
     "bedrooms": "Bedrooms",
     "maxGuests": "Max guests",
+    "backupPrice": "Backup price per night (optional)",
+    "backupPricePlaceholder": "e.g. 80",
+    "backupPriceHint": "Shown to other hosts requesting emergency backup. Payment happens directly between you and them — EnterRent doesn't process it.",
     "description": "Description",
     "descriptionPlaceholder": "A short description other hosts will see...",
     "airbnbListingUrl": "Airbnb listing URL",
@@ -300,7 +308,8 @@
     "shortMessage": "Short message...",
     "sending": "Sending...",
     "sendRequest": "Send request",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "backupRate": "Backup rate: {price}/night"
   },
   "Requests": {
     "title": "Requests",
@@ -365,7 +374,8 @@
     "viewOnMap": "View on map",
     "noHostsYet": "No verified hosts to show yet.",
     "signUpToSwap": "Sign up to request a swap",
-    "signUpToRequestBackup": "Sign up to request backup"
+    "signUpToRequestBackup": "Sign up to request backup",
+    "backupRate": "Backup rate: {price}/night"
   },
   "LocationPicker": {
     "searchPlaceholder": "Search for an address...",

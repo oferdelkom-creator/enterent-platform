@@ -61,6 +61,10 @@ export async function addListing(formData: FormData) {
   const photo = formData.get("photo") as File | null;
   const latitude = formData.get("latitude") ? Number(formData.get("latitude")) : null;
   const longitude = formData.get("longitude") ? Number(formData.get("longitude")) : null;
+  const backupPricePerNight = formData.get("backup_price_per_night")
+    ? Number(formData.get("backup_price_per_night"))
+    : null;
+  const backupCurrency = backupPricePerNight ? String(formData.get("backup_currency") ?? "USD") : null;
 
   if (!title) throw new Error("Title is required");
 
@@ -80,6 +84,8 @@ export async function addListing(formData: FormData) {
     bedrooms,
     latitude,
     longitude,
+    backup_price_per_night: backupPricePerNight,
+    backup_currency: backupCurrency,
   });
 
   revalidatePath("/dashboard/listings");
