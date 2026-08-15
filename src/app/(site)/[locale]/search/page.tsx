@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/logo";
 import LanguageSwitcher from "@/components/language-switcher";
 import { createClient } from "@/lib/supabase/server";
-import { formatBackupPrice } from "@/lib/currencies";
+import { formatBackupPriceRange } from "@/lib/currencies";
 import RequestPanel from "../dashboard/(protected)/find/request-panel";
 
 export default async function SearchPage({
@@ -129,11 +129,16 @@ export default async function SearchPage({
                     {listing.description && (
                       <p className="mt-1 line-clamp-2 text-xs text-slate-500">{listing.description}</p>
                     )}
-                    {listing.backup_price_per_night != null && (
+                    {(listing.backup_price_min != null || listing.backup_price_max != null) && (
                       <p className="mt-1 text-xs font-medium text-brand-teal-dark">
                         {t("backupRate", {
-                          price: formatBackupPrice(listing.backup_price_per_night, listing.backup_currency)!,
+                          price: formatBackupPriceRange(
+                            listing.backup_price_min,
+                            listing.backup_price_max,
+                            listing.backup_currency
+                          )!,
                         })}
+                        {listing.backup_price_note ? ` — ${listing.backup_price_note}` : ""}
                       </p>
                     )}
                     <p className="mt-1 text-xs text-slate-400">{t("hostedBy", { name: listing.host_name })}</p>

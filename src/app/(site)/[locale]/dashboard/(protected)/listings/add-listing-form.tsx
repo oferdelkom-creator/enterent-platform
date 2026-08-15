@@ -133,14 +133,26 @@ export default function AddListingForm() {
         <label className="text-xs font-medium text-slate-700">{t("backupPrice")}</label>
         <div className="flex gap-2">
           <input
-            name="backup_price_per_night"
+            name="backup_price_min"
             type="number"
             min={0}
             step="0.01"
-            placeholder={t("backupPricePlaceholder")}
+            placeholder={t("backupPriceMinPlaceholder")}
             className={inputClasses}
           />
-          <select name="backup_currency" defaultValue="USD" className="w-24 shrink-0 rounded-md border border-slate-300 px-2 py-1.5 text-sm">
+          <input
+            name="backup_price_max"
+            type="number"
+            min={0}
+            step="0.01"
+            placeholder={t("backupPriceMaxPlaceholder")}
+            className={inputClasses}
+          />
+          <select
+            name="backup_currency"
+            defaultValue="USD"
+            className="w-24 shrink-0 rounded-md border border-slate-300 px-2 py-1.5 text-sm"
+          >
             {CURRENCIES.map((c) => (
               <option key={c.code} value={c.code}>
                 {c.code}
@@ -148,6 +160,12 @@ export default function AddListingForm() {
             ))}
           </select>
         </div>
+        <textarea
+          name="backup_price_note"
+          rows={2}
+          placeholder={t("backupPriceNotePlaceholder")}
+          className={`mt-2 ${inputClasses}`}
+        />
         <p className="text-[11px] text-slate-400">{t("backupPriceHint")}</p>
       </div>
 

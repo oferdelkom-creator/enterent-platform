@@ -61,10 +61,11 @@ export async function addListing(formData: FormData) {
   const photo = formData.get("photo") as File | null;
   const latitude = formData.get("latitude") ? Number(formData.get("latitude")) : null;
   const longitude = formData.get("longitude") ? Number(formData.get("longitude")) : null;
-  const backupPricePerNight = formData.get("backup_price_per_night")
-    ? Number(formData.get("backup_price_per_night"))
-    : null;
-  const backupCurrency = backupPricePerNight ? String(formData.get("backup_currency") ?? "USD") : null;
+  const backupPriceMin = formData.get("backup_price_min") ? Number(formData.get("backup_price_min")) : null;
+  const backupPriceMax = formData.get("backup_price_max") ? Number(formData.get("backup_price_max")) : null;
+  const backupPriceNote = String(formData.get("backup_price_note") ?? "").trim() || null;
+  const backupCurrency =
+    backupPriceMin || backupPriceMax ? String(formData.get("backup_currency") ?? "USD") : null;
 
   if (!title) throw new Error("Title is required");
 
@@ -84,7 +85,9 @@ export async function addListing(formData: FormData) {
     bedrooms,
     latitude,
     longitude,
-    backup_price_per_night: backupPricePerNight,
+    backup_price_min: backupPriceMin,
+    backup_price_max: backupPriceMax,
+    backup_price_note: backupPriceNote,
     backup_currency: backupCurrency,
   });
 
