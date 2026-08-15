@@ -65,7 +65,7 @@ export default async function AdminHostsPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <HostActions hostId={host.id} />
+                    <HostActions hostId={host.id} hostName={host.full_name} />
                   </td>
                 </tr>
               ))
